@@ -1,0 +1,9 @@
+aspose_words==24.10.0
+Flask==2.0.0
+Flask_SQLAlchemy==2.5.1
+numpy==1.21.6
+Pillow==9.2.0
+Pillow==11.0.0
+PyPDF2==3.0.1
+spire_pipeline==1.2.0
+Werkzeug==2.2.3
