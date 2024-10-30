@@ -81,7 +81,7 @@ def upload_image_resize():
                                  .getvalue()).decode('ascii')
             images.append([base64img])
 
-    print("New image size:", img_resized.shape)
+    #print("New image size:", img_resized.shape)
     return render_template('upload_resize.html', images=images )
     #return render_template(url_for('upload_form_resize'))
 
@@ -95,7 +95,7 @@ def upload_image_blur():
     images = []
     for file in request.files.getlist("file[]"):
         print("***************************")
-        print("image: ", file)
+        #print("image: ", file)
         if file.filename == '':
             flash('No image selected for uploading')
             return redirect(request.url)
@@ -148,7 +148,7 @@ def uploadfile():
       # Saving the file in the required destination
       if allowed_file(f.filename):
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
-         print("filename: ", f.filename)
+         #print("filename: ", f.filename)
          filename = f.filename.split(".")
          doc = aw.Document(upload_folder + r"\{}".format(f.filename))
          #doc = aw.Document(r"\{}".format(f.filename))
