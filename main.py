@@ -137,11 +137,11 @@ def upload_form_pdftoword():
     return render_template('upload_pdftoword2.html')
 
 # Sending the file to the user
-@app.route('/pdftoword')
-def download(filename):
-    return send_file(filename, as_attachment=True)
+#@app.route('/pdftoword')
+#def download(filename):
+#    return send_file(filename, as_attachment=True)
 
-@app.route('/pdftoword', methods = ['GET', 'POST'])
+@app.route('/pdftoword', methods = ['POST'])
 def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
@@ -154,7 +154,8 @@ def uploadfile():
          #doc = aw.Document(r"\{}".format(f.filename))
          doc.save(upload_folder + r"\{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
-         return download("{}.docx".format(filename[0]))
+         #return download("{}.docx".format(filename[0]))
+         return send_file("{}.docx".format(filename[0]), as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
