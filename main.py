@@ -155,7 +155,8 @@ def uploadfile():
          doc.save(upload_folder + r"\{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
          #return download("{}.docx".format(filename[0]))
-         return send_file(upload_folder + r"\{}.docx".format(filename[0]), as_attachment=True)
+         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+                          as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
