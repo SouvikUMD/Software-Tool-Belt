@@ -81,7 +81,7 @@ def upload_image_resize():
                                  .getvalue()).decode('ascii')
             images.append([base64img])
 
-    #print("New image size:", img_resized.shape)
+    print("New image size:", img_resized.shape)
     return render_template('upload_resize.html', images=images )
     #return render_template(url_for('upload_form_resize'))
 
@@ -95,7 +95,7 @@ def upload_image_blur():
     images = []
     for file in request.files.getlist("file[]"):
         print("***************************")
-        #print("image: ", file)
+        print("image: ", file)
         if file.filename == '':
             flash('No image selected for uploading')
             return redirect(request.url)
@@ -137,9 +137,9 @@ def upload_form_pdftoword():
     return render_template('upload_pdftoword2.html')
 
 # Sending the file to the user
-#@app.route('/pdftoword')
-#def download(filename):
-#    return send_file(filename, as_attachment=True)
+@app.route('/pdftoword')
+def download(filename):
+    return send_file(filename, as_attachment=True)
 
 @app.route('/pdftoword', methods = ['POST'])
 def uploadfile():
@@ -148,15 +148,14 @@ def uploadfile():
       # Saving the file in the required destination
       if allowed_file(f.filename):
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
-         #print("filename: ", f.filename)
+         print("filename: ", f.filename)
          filename = f.filename.split(".")
-         doc = aw.Document(upload_folder + "/{}".format(f.filename))
+         doc = aw.Document(upload_folder + r"\{}".format(f.filename))
          #doc = aw.Document(r"\{}".format(f.filename))
-         doc.save(upload_folder + "/{}.docx".format(filename[0]))
+         doc.save(upload_folder + r"\{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
-         #return download("{}.docx".format(filename[0]))
-         return send_file(upload_folder + "/{}.docx".format(filename[0]), 
-                          as_attachment=True)
+         return download("{}.docx".format(filename[0]))
+         #return send_file("{}.docx".format(filename[0]), as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
