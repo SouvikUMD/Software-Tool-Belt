@@ -24,15 +24,22 @@ app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
-upload_folder = r"uploads"
+upload_folder = os.path.dirname(os.path.abspath(__file__)) + '/uploads/'
+download_folder = os.path.dirname(os.path.abspath(__file__)) + '/downloads/'
+
 if not os.path.exists(upload_folder):
    os.mkdir(upload_folder)
 
+if not os.path.exists(download_folder):
+   os.mkdir(download_folder)
+   
 # Max size of the file
-app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
+app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
+app.config['DOWNLOAD_FOLDER'] = download_folder
+
 
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -139,7 +146,10 @@ def upload_form_pdftoword():
 # Sending the file to the user
 @app.route('/pdftoword')
 def download(filename):
-    return send_file(filename, as_attachment=True)
+    #output_stream = open(app.config['DOWNLOAD_FOLDER'] + filename, 'wb')
+    #output.write(output_stream)
+    return send_file(filename, download_name=download_folder,
+                     as_attachment=True)
 
 @app.route('/pdftoword', methods = ['POST'])
 def uploadfile():
