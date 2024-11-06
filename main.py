@@ -24,21 +24,24 @@ app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
-upload_folder = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
-download_folder = os.path.dirname(os.path.abspath(__file__)) + '/downloads'
+#upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
+#print("upload_folder path: ", upload_folder)
+#download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
+upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
+#download_folder = r"downloads"
 
 if not os.path.exists(upload_folder):
-    os.mkdir(upload_folder)
+   os.mkdir(upload_folder)
 
-if not os.path.exists(download_folder):
-    os.mkdir(download_folder)
+#if not os.path.exists(download_folder):
+#   os.mkdir(download_folder)
    
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
-app.config['DOWNLOAD_FOLDER'] = download_folder
+#app.config['DOWNLOAD_FOLDER'] = download_folder
 
 
 def allowed_file(filename):
@@ -144,12 +147,13 @@ def upload_form_pdftoword():
     return render_template('upload_pdftoword2.html')
 
 # Sending the file to the user
-@app.route('/pdftoword')
-def download(filename):
+#@app.route('/pdftoword')
+#def download(filename):
     #output_stream = open(app.config['DOWNLOAD_FOLDER'] + filename, 'wb')
     #output.write(output_stream)
-    return send_file(filename, download_name=download_folder,
-                     as_attachment=True)
+    #return send_file(filename, download_name=download_folder,
+    #                 as_attachment=True)
+    #return send_file(filename, as_attachment=True)
 
 @app.route('/pdftoword', methods = ['POST'])
 def uploadfile():
@@ -160,12 +164,14 @@ def uploadfile():
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
          print("filename: ", f.filename)
          filename = f.filename.split(".")
-         doc = aw.Document(upload_folder + "/{}".format(f.filename))
+         doc = aw.Document(upload_folder + r"\{}".format(f.filename))
          #doc = aw.Document(r"\{}".format(f.filename))
-         doc.save(upload_folder + "/{}.docx".format(filename[0]))
+         #doc.save(download_folder + r"\{}.docx".format(filename[0]))
+         doc.save(upload_folder + r"\{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
-         return download("{}.docx".format(filename[0]))
-         #return send_file("{}.docx".format(filename[0]), as_attachment=True)
+         #return download("{}.docx".format(filename[0]))
+         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+                          as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
