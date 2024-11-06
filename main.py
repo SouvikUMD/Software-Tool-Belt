@@ -24,14 +24,14 @@ app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
-upload_folder = os.path.abspath(__file__) + '/uploads'
-download_folder = os.path.abspath(__file__) + '/downloads'
+upload_folder = os.path.dirname(os.path.abspath(__file__)) + '/uploads'
+download_folder = os.path.dirname(os.path.abspath(__file__)) + '/downloads'
 
-#if not os.path.exists(upload_folder):
-os.mkdir(upload_folder)
+if not os.path.exists(upload_folder):
+    os.mkdir(upload_folder)
 
-#if not os.path.exists(download_folder):
-os.mkdir(download_folder)
+if not os.path.exists(download_folder):
+    os.mkdir(download_folder)
    
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
