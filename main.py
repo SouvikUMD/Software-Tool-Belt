@@ -28,7 +28,7 @@ app = Flask(__name__)
 #print("upload_folder path: ", upload_folder)
 #download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
-upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads"
+upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads" # Absolute Path of upload_folder.
 #download_folder = r"downloads"
 
 if not os.path.exists(upload_folder):
@@ -162,19 +162,13 @@ def uploadfile():
       f = request.files['file'] # get the file from the files object
       # Saving the file in the required destination
       if allowed_file(f.filename):
+         # Save pdf into upload_folder.
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
          print("filename: ", f.filename)
          filename = f.filename.split(".")
-         #doc = aw.Document(upload_folder + r"\{}".format(f.filename))
+         # Convert pdf to word document and save into upload_folder
          doc = aw.Document(upload_folder + "/{}".format(f.filename))
-         #doc = aw.Document(r"\{}".format(f.filename))
-         #doc.save(download_folder + r"\{}.docx".format(filename[0]))
-         #doc.save(upload_folder + r"\{}.docx".format(filename[0]))
          doc.save(upload_folder + "/{}.docx".format(filename[0]))
-         #doc.save(r"\{}.docx".format(filename[0]))
-         #return download("{}.docx".format(filename[0]))
-         #return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
-         #                 as_attachment=True)
          return send_file(upload_folder + "/{}.docx".format(filename[0]), 
                           as_attachment=True)
       else:
