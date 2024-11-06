@@ -27,7 +27,8 @@ app = Flask(__name__)
 #upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
 #print("upload_folder path: ", upload_folder)
 #download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
-upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
+#upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
+upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads"
 #download_folder = r"downloads"
 
 if not os.path.exists(upload_folder):
