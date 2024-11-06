@@ -27,11 +27,11 @@ app = Flask(__name__)
 upload_folder = os.path.abspath(__file__) + '/uploads'
 download_folder = os.path.abspath(__file__) + '/downloads'
 
-if not os.path.exists(upload_folder):
-   os.mkdir(upload_folder)
+#if not os.path.exists(upload_folder):
+os.mkdir(upload_folder)
 
-if not os.path.exists(download_folder):
-   os.mkdir(download_folder)
+#if not os.path.exists(download_folder):
+os.mkdir(download_folder)
    
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
