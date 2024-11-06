@@ -18,7 +18,7 @@ main = Blueprint(
     'main', __name__,
 )
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx', 'PDF'])
 # Initialize flask  and create sqlite database
 app = Flask(__name__)
 
@@ -165,13 +165,17 @@ def uploadfile():
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
          print("filename: ", f.filename)
          filename = f.filename.split(".")
-         doc = aw.Document(upload_folder + r"\{}".format(f.filename))
+         #doc = aw.Document(upload_folder + r"\{}".format(f.filename))
+         doc = aw.Document(upload_folder + "/{}".format(f.filename))
          #doc = aw.Document(r"\{}".format(f.filename))
          #doc.save(download_folder + r"\{}.docx".format(filename[0]))
-         doc.save(upload_folder + r"\{}.docx".format(filename[0]))
+         #doc.save(upload_folder + r"\{}.docx".format(filename[0]))
+         doc.save(upload_folder + "/{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
          #return download("{}.docx".format(filename[0]))
-         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+         #return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+         #                 as_attachment=True)
+         return send_file(upload_folder + "/{}.docx".format(filename[0]), 
                           as_attachment=True)
       else:
          return 'The file extension is not allowed'
