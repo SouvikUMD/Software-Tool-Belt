@@ -156,7 +156,7 @@ def upload_form_pdftoword():
     #                 as_attachment=True)
     #return send_file(filename, as_attachment=True)
 
-@app.route('/pdftoword', methods = ['POST'])
+@app.route('/pdftoword', methods = ['GET', 'POST'])
 def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
