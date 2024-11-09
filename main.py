@@ -204,5 +204,5 @@ def upload_image():
     return render_template('upload_grayscale.html', images=images )
     
 
-if __name__ == "__main__":
-    app.run(debug=True)
+#if __name__ == "__main__":
+    #app.run(debug=True)
