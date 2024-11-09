@@ -48,17 +48,17 @@ app.config['UPLOAD_FOLDER'] = upload_folder
 def allowed_file(filename):
     return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
-#@app.route('/')
+@app.route('/')
 def home():
     return render_template("home.html")
                 
 
-#@app.route('/resize')
+@app.route('/resize')
 def upload_form_resize():
     return render_template('upload_resize.html')
 
 
-#@app.route('/resize', methods=['GET', 'POST'])
+@app.route('/resize', methods=['GET', 'POST'])
 def upload_image_resize():
     images = []
     height = request.form.get("dim1")
@@ -97,11 +97,11 @@ def upload_image_resize():
     #return render_template(url_for('upload_form_resize'))
 
 
-#@app.route('/blur')
+@app.route('/blur')
 def upload_form_blur():
     return render_template('upload_blur.html')
 
-#@app.route('/blur', methods=['POST'])
+@app.route('/blur', methods=['POST'])
 def upload_image_blur():
     images = []
     for file in request.files.getlist("file[]"):
@@ -139,11 +139,11 @@ def upload_image_blur():
     #print("images:", len(images))
     return render_template('upload_blur.html', images=images)
 
-#@app.route('/grayscale')
+@app.route('/grayscale')
 def upload_form():
     return render_template('upload_grayscale.html')
 
-#@app.route('/pdftoword')
+@app.route('/pdftoword')
 def upload_form_pdftoword():
     return render_template('upload_pdftoword2.html')
 
@@ -156,7 +156,7 @@ def upload_form_pdftoword():
     #                 as_attachment=True)
     #return send_file(filename, as_attachment=True)
 
-#@app.route('/pdftoword', methods = ['GET', 'POST'])
+@app.route('/pdftoword', methods = ['GET', 'POST'])
 def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
@@ -175,7 +175,7 @@ def uploadfile():
          return 'The file extension is not allowed'
 
 
-#@app.route('/grayscale', methods=['POST'])
+@app.route('/grayscale', methods=['POST'])
 def upload_image():
     images = []
     for file in request.files.getlist("file[]"):
