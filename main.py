@@ -9,7 +9,6 @@ from io import BytesIO
 from PIL import Image
 import base64
 from Helpers import *
-import aspose.words as aw
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import os
 from spire.pdf.common import *
