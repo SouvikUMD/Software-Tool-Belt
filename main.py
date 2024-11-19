@@ -12,13 +12,16 @@ from Helpers import *
 import aspose.words as aw
 from PyPDF2 import PdfFileReader, PdfFileWriter
 import os
+from spire.pdf.common import *
+from spire.pdf import *
+
 
 
 main = Blueprint(
     'main', __name__,
 )
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx', 'PDF'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx'])
 # Initialize flask  and create sqlite database
 app = Flask(__name__)
 
@@ -27,8 +30,7 @@ app = Flask(__name__)
 #upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
 #print("upload_folder path: ", upload_folder)
 #download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
-#upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
-upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads" # Absolute Path of upload_folder.
+upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
 #download_folder = r"downloads"
 
 if not os.path.exists(upload_folder):
@@ -156,20 +158,21 @@ def upload_form_pdftoword():
     #                 as_attachment=True)
     #return send_file(filename, as_attachment=True)
 
-@app.route('/pdftoword', methods = ['GET', 'POST'])
+@app.route('/pdftoword', methods = ['POST'])
 def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
       # Saving the file in the required destination
       if allowed_file(f.filename):
-         # Save pdf into upload_folder.
          f.save(os.path.join(app.config['UPLOAD_FOLDER'] ,secure_filename(f.filename))) # this will secure the file
          print("filename: ", f.filename)
          filename = f.filename.split(".")
-         # Convert pdf to word document and save into upload_folder
-         doc = aw.Document(upload_folder + "/{}".format(f.filename))
-         doc.save(upload_folder + "/{}.docx".format(filename[0]))
-         return send_file(upload_folder + "/{}.docx".format(filename[0]), 
+         doc = PdfDocument()
+         doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
+         doc.SaveToFile(upload_folder + r"\{}.docx".format(filename[0]))
+         #doc.save(r"\{}.docx".format(filename[0]))
+         #return download("{}.docx".format(filename[0]))
+         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
                           as_attachment=True)
       else:
          return 'The file extension is not allowed'
@@ -204,5 +207,5 @@ def upload_image():
     return render_template('upload_grayscale.html', images=images )
     
 
-#if __name__ == "__main__":
-    #app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True)
