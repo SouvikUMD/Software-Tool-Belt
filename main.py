@@ -37,15 +37,15 @@ download_folder = "/home/softwaretoolbelt/Software-Tool-Belt/downloads"
 if not os.path.exists(upload_folder):
    os.mkdir(upload_folder)
 
-if not os.path.exists(download_folder):
-   os.mkdir(download_folder)
+#if not os.path.exists(download_folder):
+#  os.mkdir(download_folder)
 
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
-app.config['DOWNLOAD_FOLDER'] = download_folder
+#app.config['DOWNLOAD_FOLDER'] = download_folder
 
 
 def allowed_file(filename):
@@ -171,14 +171,14 @@ def uploadfile():
          doc = PdfDocument()
          #doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
          doc.LoadFromFile(upload_folder + "/{}".format(f.filename))
-         #doc.SaveToFile(upload_folder + r"\{}.docx".format(filename[0]))
-         doc.SaveToFile(download_folder + "/{}.docx".format(filename[0]))
+         doc.SaveToFile(upload_folder + "/{}.docx".format(filename[0]))
+         #doc.SaveToFile(download_folder + "/{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
-         return download(download_folder + "/{}.docx".format(filename[0]))
+         #return download(download_folder + "/{}.docx".format(filename[0]))
          #return send_file(upload_folder + r"\{}.docx".format(filename[0]),
          #                 as_attachment=True)
-         #return send_file(upload_folder + "/{}.docx".format(filename[0]),
-         #                 as_attachment=True)
+         return send_file(upload_folder + "/{}.docx".format(filename[0]),
+                          as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
