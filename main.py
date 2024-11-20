@@ -20,30 +20,32 @@ main = Blueprint(
     'main', __name__,
 )
 
-ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'pdf', 'docx', 'PDF'])
 # Initialize flask  and create sqlite database
 app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
 #upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
+upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads"
 #print("upload_folder path: ", upload_folder)
 #download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
-upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
+#upload_folder = r"/home/softwaretoolbelt/Software-Tool-Belt"
 #download_folder = r"downloads"
+download_folder = "/home/softwaretoolbelt/Software-Tool-Belt/downloads"
 
 if not os.path.exists(upload_folder):
    os.mkdir(upload_folder)
 
-#if not os.path.exists(download_folder):
-#   os.mkdir(download_folder)
-   
+if not os.path.exists(download_folder):
+   os.mkdir(download_folder)
+
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
-#app.config['DOWNLOAD_FOLDER'] = download_folder
+app.config['DOWNLOAD_FOLDER'] = download_folder
 
 
 def allowed_file(filename):
@@ -52,7 +54,7 @@ def allowed_file(filename):
 @app.route('/')
 def home():
     return render_template("home.html")
-                
+
 
 @app.route('/resize')
 def upload_form_resize():
@@ -69,7 +71,7 @@ def upload_image_resize():
     length = int(length)
     print("length: ", length)
 
-    
+
     for file in request.files.getlist("file[]"):
         print("***************************")
         print("image: ", file)
@@ -150,14 +152,14 @@ def upload_form_pdftoword():
 
 # Sending the file to the user
 #@app.route('/pdftoword')
-#def download(filename):
+def download(filename):
     #output_stream = open(app.config['DOWNLOAD_FOLDER'] + filename, 'wb')
     #output.write(output_stream)
     #return send_file(filename, download_name=download_folder,
     #                 as_attachment=True)
-    #return send_file(filename, as_attachment=True)
+    return send_file(filename, as_attachment=True)
 
-@app.route('/pdftoword', methods = ['POST'])
+@app.route('/pdftoword', methods = ['GET', 'POST'])
 def uploadfile():
    if request.method == 'POST': # check if the method is post
       f = request.files['file'] # get the file from the files object
@@ -167,12 +169,16 @@ def uploadfile():
          print("filename: ", f.filename)
          filename = f.filename.split(".")
          doc = PdfDocument()
-         doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
-         doc.SaveToFile(upload_folder + r"\{}.docx".format(filename[0]))
+         #doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
+         doc.LoadFromFile(upload_folder + "/{}".format(f.filename))
+         #doc.SaveToFile(upload_folder + r"\{}.docx".format(filename[0]))
+         doc.SaveToFile(download_folder + "/{}.docx".format(filename[0]))
          #doc.save(r"\{}.docx".format(filename[0]))
-         #return download("{}.docx".format(filename[0]))
-         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
-                          as_attachment=True)
+         return download(download_folder + "/{}.docx".format(filename[0]))
+         #return send_file(upload_folder + r"\{}.docx".format(filename[0]),
+         #                 as_attachment=True)
+         #return send_file(upload_folder + "/{}.docx".format(filename[0]),
+         #                 as_attachment=True)
       else:
          return 'The file extension is not allowed'
 
@@ -204,7 +210,7 @@ def upload_image():
 
     #print("images:", len(images))
     return render_template('upload_grayscale.html', images=images )
-    
+
 
 if __name__ == "__main__":
     app.run(debug=True)
