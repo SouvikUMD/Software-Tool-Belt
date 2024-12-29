@@ -27,8 +27,8 @@ app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
-#upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
-upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App\uploads"
+upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
+#upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App\uploads"
 print("upload_folder path: ", upload_folder)
 download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
 print("download_folder path: ", download_folder)
