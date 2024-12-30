@@ -38,18 +38,18 @@ print("download_folder path: ", download_folder)
 #upload_folder = r"uploads"
 #download_folder = r"downloads"
 
-#if not os.path.exists(upload_folder):
-#   os.mkdir(upload_folder)
+if not os.path.exists(upload_folder):
+   os.mkdir(upload_folder)
 
-#if not os.path.exists(download_folder):
-#   os.mkdir(download_folder)
+if not os.path.exists(download_folder):
+   os.mkdir(download_folder)
    
 # Max size of the file
 app.config['MAX_CONTENT_LENGTH'] = 8 * 1024 * 1024
 
 # Configuring the upload folder
 app.config['UPLOAD_FOLDER'] = upload_folder
-#app.config['DOWNLOAD_FOLDER'] = download_folder
+app.config['DOWNLOAD_FOLDER'] = download_folder
 
 
 def allowed_file(filename):
