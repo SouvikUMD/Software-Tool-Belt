@@ -27,10 +27,12 @@ app = Flask(__name__)
 
 # Creating the upload folder
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App"
-upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
+#upload_folder = os.path.dirname(os.path.abspath(__file__)) + r"\uploads"
+upload_folder = "/home/softwaretoolbelt/Software-Tool-Belt/uploads"
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\Combine_Blur_Grayscale_Resize_Web_App\uploads"
 print("upload_folder path: ", upload_folder)
-download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
+#download_folder = os.path.dirname(os.path.abspath(__file__)) +  r"\downloads"
+download_folder = "/home/softwaretoolbelt/Software-Tool-Belt/downloads"
 print("download_folder path: ", download_folder)
 #upload_folder = r"C:\Users\prama\OneDrive\Documents\Apps\uploads"
 #upload_folder = r"uploads"
@@ -189,20 +191,23 @@ def uploadfile():
                              secure_filename(f.filename))) # this will secure the file
          filename = f.filename.split(".")
          doc = PdfDocument()
-         doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
+         doc.LoadFromFile(upload_folder + "/{}".format(f.filename))
+         #doc.LoadFromFile(upload_folder + r"\{}".format(f.filename))
          doc.ConvertOptions.SetPdfToDocOptions(True, True)
          #doc.SaveToFile(download_folder + r"\{}.docx".format(filename[0]))
          #doc.SaveToFile(upload_folder + r"\{}.docx".format(filename[0]), 
          #               FileFormat.DOCX)
-         doc.SaveToFile(upload_folder + "\{}.docx".format(filename[0]), 
+         #doc.SaveToFile(upload_folder + "\{}.docx".format(filename[0]), 
+         #               FileFormat.DOCX)
+         doc.SaveToFile(download_folder + "/{}.docx".format(filename[0]), 
                         FileFormat.DOCX)
          #doc.save(r"\{}.docx".format(filename[0]))
          #doc.Close()
          #return download("{}.docx".format(filename[0]))
-         #return send_file(download_folder + r"\{}.docx".format(filename[0]), 
-         #                 as_attachment=True)
-         return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+         return send_file(download_folder + "/{}.docx".format(filename[0]),
                           as_attachment=True)
+         #return send_file(upload_folder + r"\{}.docx".format(filename[0]), 
+         #                 as_attachment=True)
          #return doc
       else:
          return 'The file extension is not allowed'
